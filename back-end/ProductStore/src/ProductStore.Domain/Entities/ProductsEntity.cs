@@ -5,7 +5,7 @@
         public int ProductId { get; set; }
         public string? ProductName { get; set; }
         public int ProductCategory { get; set; }
-        public decimal ProductPrice { get; set; }
+        public double ProductPrice { get; set; }
         public int ProductRating { get; set; }
     }
 }

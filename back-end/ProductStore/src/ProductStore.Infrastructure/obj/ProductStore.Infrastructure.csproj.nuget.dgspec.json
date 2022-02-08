@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Nilesh Pujari\\_Practice projects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Infrastructure\\ProductStore.Infrastructure.csproj": {}
+    "D:\\InteviewedCompanyProjects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Infrastructure\\ProductStore.Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Nilesh Pujari\\_Practice projects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Infrastructure\\ProductStore.Infrastructure.csproj": {
+    "D:\\InteviewedCompanyProjects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Domain\\ProductStore.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Nilesh Pujari\\_Practice projects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Infrastructure\\ProductStore.Infrastructure.csproj",
-        "projectName": "ProductStore.Infrastructure",
-        "projectPath": "C:\\Nilesh Pujari\\_Practice projects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Infrastructure\\ProductStore.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\nilesh pujari\\.nuget\\packages\\",
-        "outputPath": "C:\\Nilesh Pujari\\_Practice projects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Infrastructure\\obj\\",
+        "projectUniqueName": "D:\\InteviewedCompanyProjects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Domain\\ProductStore.Domain.csproj",
+        "projectName": "ProductStore.Domain",
+        "projectPath": "D:\\InteviewedCompanyProjects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Domain\\ProductStore.Domain.csproj",
+        "packagesPath": "C:\\Users\\Nilesh Pujari\\.nuget\\packages\\",
+        "outputPath": "D:\\InteviewedCompanyProjects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\nilesh pujari\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Nilesh Pujari\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,8 +25,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://tengroup-133824686826.d.codeartifact.eu-west-1.amazonaws.com/nuget/tengroup-nuget/v3/index.json": {}
+          "http://localhost:8090/httpAuth/app/nuget/feed/_Root/Development_Nuget_Source/v3/index.json": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -43,6 +43,16 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[6.0.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -58,7 +68,75 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\InteviewedCompanyProjects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Infrastructure\\ProductStore.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\InteviewedCompanyProjects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Infrastructure\\ProductStore.Infrastructure.csproj",
+        "projectName": "ProductStore.Infrastructure",
+        "projectPath": "D:\\InteviewedCompanyProjects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Infrastructure\\ProductStore.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Nilesh Pujari\\.nuget\\packages\\",
+        "outputPath": "D:\\InteviewedCompanyProjects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Nilesh Pujari\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://localhost:8090/httpAuth/app/nuget/feed/_Root/Development_Nuget_Source/v3/index.json": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\InteviewedCompanyProjects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Domain\\ProductStore.Domain.csproj": {
+                "projectPath": "D:\\InteviewedCompanyProjects\\E-Zest\\back-end\\ProductStore\\src\\ProductStore.Domain\\ProductStore.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

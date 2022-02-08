@@ -2,11 +2,16 @@
 using ProductStore.Domain.Configurations;
 using ProductStore.Domain.Entities;
 
-namespace ProductStore.Domain.Persistence
+namespace ProductStore.Infrastructure.Persistence
 {
     public class ProductStoreDataContext : DbContext
     {
-        public DbSet<ProductCategoryEntity> ProductCategory{ get; set; }
+        public ProductStoreDataContext(DbContextOptions<ProductStoreDataContext> options) : base(options)
+        {
+
+        }
+
+        public DbSet<ProductCategoryEntity> ProductCategory { get; set; }
         public DbSet<ProductImagesEntity> ProductImages { get; set; }
         public DbSet<ProductsEntity> Products { get; set; }
 
