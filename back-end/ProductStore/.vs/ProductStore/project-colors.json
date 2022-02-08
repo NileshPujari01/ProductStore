@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "cadba8a3-9700-47d1-a9b1-210313c3aa89": {
+      "ProjectGuid": "cadba8a3-9700-47d1-a9b1-210313c3aa89",
+      "DisplayName": "ProductStore",
+      "ColorIndex": 0
+    },
+    "3ff5a721-d6b2-4d64-b423-222e3a2847e3": {
+      "ProjectGuid": "3ff5a721-d6b2-4d64-b423-222e3a2847e3",
+      "DisplayName": "ProductStore.Application",
+      "ColorIndex": 1
+    },
+    "7fe9e3d9-4a32-49db-81f2-c079ab79779e": {
+      "ProjectGuid": "7fe9e3d9-4a32-49db-81f2-c079ab79779e",
+      "DisplayName": "ProductStore.Domain",
+      "ColorIndex": 2
+    },
+    "34b12125-2a43-42be-827c-c70767354008": {
+      "ProjectGuid": "34b12125-2a43-42be-827c-c70767354008",
+      "DisplayName": "ProductStore.Infrastructure",
+      "ColorIndex": 3
+    },
+    "593fe4c8-747c-477c-9beb-a4dd747018e4": {
+      "ProjectGuid": "593fe4c8-747c-477c-9beb-a4dd747018e4",
+      "DisplayName": "ProductStore.Domain",
+      "ColorIndex": 4
+    },
+    "1b7a01a9-34ff-48f9-bacf-aed344ac9989": {
+      "ProjectGuid": "1b7a01a9-34ff-48f9-bacf-aed344ac9989",
+      "DisplayName": "ProductStore.API",
+      "ColorIndex": 5
+    }
+  },
+  "NextColorIndex": 6
+}
