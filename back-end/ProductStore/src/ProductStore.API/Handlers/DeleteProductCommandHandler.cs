@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
 using ProductStore.API.Commands;
+using ProductStore.API.Models.Response;
 using ProductStore.Application.Interfaces;
 
 namespace ProductStore.API.Handlers
 {
-    public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, bool>
+    public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, ProductDeleteResponse>
     {
         private readonly IDataService _dataService;
         private readonly IMapper _mapper;
@@ -16,9 +17,11 @@ namespace ProductStore.API.Handlers
             _mapper = mapper;
         }
 
-        public async Task<bool> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+        public async Task<ProductDeleteResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            return await _dataService.DeleteProduct(request.DeleteProduct);
+            var dbResponse = await _dataService.DeleteProduct(request.DeleteProduct);
+            var response = _mapper.Map<ProductDeleteResponse>(dbResponse);
+            return response;
         }
     }
 }

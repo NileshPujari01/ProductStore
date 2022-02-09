@@ -34,6 +34,12 @@ namespace ProductStore.API.Mapping
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(dest => dest.ProductName))
                 .ForMember(dest => dest.ProductPrice, opt => opt.MapFrom(dest => dest.ProductPrice))
                 .ForMember(dest => dest.ProductCategory, opt => opt.MapFrom(dest => dest.ProductCategory));
+
+            CreateMap<applicationModel.Response.CreateProductResponse, apiModel.Response.ProductApiResponse>()
+               .ForMember(dest => dest.ProductName, opt => opt.MapFrom(dest => dest.ProductName));
+
+            CreateMap<applicationModel.Response.DeleteProductResponse, apiModel.Response.ProductDeleteResponse>()
+               .ForMember(dest => dest.IsProductDeleted, opt => opt.MapFrom(dest => dest.IsProductDeleted));
         }
     }
 }

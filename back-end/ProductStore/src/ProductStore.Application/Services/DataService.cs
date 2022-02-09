@@ -92,14 +92,15 @@ namespace ProductStore.Application.Services
             return new SetProductRatingResponse { ProductId = entity.ProductId, ProductRating = entity.ProductRating };
         }
 
-        public async Task<string> CreateProduct(ProductRequest productRequest)
+        public async Task<CreateProductResponse> CreateProduct(ProductRequest productRequest)
         {
             var request = _mapper.Map<ProductsEntity>(productRequest);
-            var response = await _productsRepository.AddAsync(request);
-            return response.ProductName;
+            var dbResponse = await _productsRepository.AddAsync(request);
+            var response = _mapper.Map<CreateProductResponse>(dbResponse);
+            return response;
         }
 
-        public async Task<string> UpdateProduct(ProductRequest productRequest)
+        public async Task<CreateProductResponse> UpdateProduct(ProductRequest productRequest)
         {
             var entity = await _productsRepository.GetByIdAsync(productRequest.ProductId);
             entity.ProductName = productRequest.ProductName;
@@ -107,10 +108,10 @@ namespace ProductStore.Application.Services
             entity.ProductPrice = productRequest.ProductPrice;
             entity.ProductCategory = productRequest.ProductCategory;
             await _productsRepository.UpdateAsync(entity);
-            return entity.ProductName;
+            return new CreateProductResponse { ProductName = entity.ProductName };
         }
 
-        public async Task<bool> DeleteProduct(int productId)
+        public async Task<DeleteProductResponse> DeleteProduct(int productId)
         {
             bool status;
             try
@@ -123,7 +124,7 @@ namespace ProductStore.Application.Services
             {
                 status = false;
             }
-            return status;
+            return new DeleteProductResponse { IsProductDeleted = status };
         }
     }
 }

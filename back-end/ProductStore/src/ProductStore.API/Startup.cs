@@ -34,7 +34,7 @@ namespace ProductStore.API
             services.AddDbContext<ProductStoreDataContext>(options => 
                 options.UseNpgsql(Configuration.GetConnectionString("ProductStoreConnectionString"))
             );
-            
+            services.AddMvc(options => { options.EnableEndpointRouting = false; });
             services.AddControllers();
             services.AddAutoMapper(GetMapperProfileAssemblies());
 
@@ -48,7 +48,7 @@ namespace ProductStore.API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
+            app.UseMvc();
             app.UseRouting();
             
             app.UseEndpoints(endpoints =>

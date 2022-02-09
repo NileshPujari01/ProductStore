@@ -10,8 +10,8 @@ namespace ProductStore.Application.Interfaces
         Task<ProductImagesResponse> GetProductImages();
         Task<ProductsResponse> GetProducts();
         Task<SetProductRatingResponse> SetProductRating(SetProductRatingRequest ratingRequest);
-        Task<string> CreateProduct(ProductRequest productRequest);
-        Task<string> UpdateProduct(ProductRequest productRequest);
-        Task<bool> DeleteProduct(int productId);
+        Task<CreateProductResponse> CreateProduct(ProductRequest productRequest);
+        Task<CreateProductResponse> UpdateProduct(ProductRequest productRequest);
+        Task<DeleteProductResponse> DeleteProduct(int productId);
     }
 }

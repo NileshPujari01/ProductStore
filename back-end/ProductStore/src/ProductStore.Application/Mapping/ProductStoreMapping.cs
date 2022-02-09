@@ -14,6 +14,12 @@ namespace ProductStore.Application.Mapping
                 .ForMember(dest => dest.ProductPrice, opt => opt.MapFrom(dest => dest.ProductPrice))
                 .ForMember(dest => dest.ProductCategory, opt => opt.MapFrom(dest => dest.ProductCategory))
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(dest => dest.ProductName));
+
+            CreateMap<entityModel.ProductsEntity, applicationModel.Response.CreateProductResponse>()
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(dest => dest.ProductName));
+
+            CreateMap<bool, applicationModel.Response.DeleteProductResponse>();
+
         }
     }
 }
