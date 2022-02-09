@@ -9,12 +9,4 @@ import { Router } from '@angular/router';
 export class AppComponent {
   @Output() userType: EventEmitter<string> = new EventEmitter<string>();
   title = 'ProductStore';
-  public adminUser = "AdminUser";
-  public endUser = "EndUser";
-  /**
-   *
-   */
-  constructor(private router: Router ) {
-    
-  }
 }

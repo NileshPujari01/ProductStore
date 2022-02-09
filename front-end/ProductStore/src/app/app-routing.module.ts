@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 const routes: Routes = [
-  
+  { 
+    path: 'home-landing', 
+    component: LandingPageComponent, 
+    data: { title: 'Welcome!' } 
+  },
   {
     path: 'admin-user',
     loadChildren: () => import('./admin-user/admin-user.module').then((x) => x.AdminUserModule)

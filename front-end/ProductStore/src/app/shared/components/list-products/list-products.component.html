@@ -1,45 +1,62 @@
 {{userType}}
-<div *ngIf="userType === 'EndUser'; else elseTemplate" >
-  <div>User Section</div>
-<div class="row">
-  <div class="col-4" *ngFor="let productItems of products">
-    <mat-card class="seperation">
-      <mat-card-header>
-        <mat-card-title>{{productItems.productName}}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        Category: {{productItems.productCategory}} <br>
-        Price: {{productItems.productPrice}} <br>
-        Rating: {{productItems.productRating}}<br>
-      </mat-card-content>
-      <mat-card-actions>
-        <a style="cursor: pointer;" (click)="openDialog('Rate',{productId: productItems.productId})">
-          Rate </a>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-</div>
+<br>
+<div style="display:flex; flex-direction: row;" *ngIf="userType === 'EndUser'; else elseTemplate">
+  <mat-card style="border: 1px solid black; width:10%; margin: 1%; height: 10%;" *ngFor="let productItems of products">
+    <mat-card-header>
+      <mat-card-title>{{productItems.productName}}</mat-card-title>
+      <mat-card-subtitle>
+        <img
+        src="../../../../assets/Images/Fridge.jfif"
+        mat-card-avatar />
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Product Information
+      </p>
+      
+      <mat-list role="list">
+        <mat-list-item role="listitem">Category: {{productItems.productCategory}}</mat-list-item>
+        <mat-list-item role="listitem">Price: {{productItems.productPrice}}</mat-list-item>
+        <mat-list-item role="listitem">Rating: {{productItems.productRating}}</mat-list-item>
+      </mat-list>
+      
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button (click)="openDialog('Rate',{productId: productItems.productId})">Rate</button>
+    </mat-card-actions>
+  </mat-card>
 </div>
 
 <ng-template #elseTemplate>
-  <div>Admin Section</div>
-  <div class="row">
-    <div class="col-4" *ngFor="let productItems of products">
-      <mat-card class="seperation">
-        <mat-card-header>
-          <mat-card-title>{{productItems.productName}}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          Category: {{productItems.productCategory}} <br>
-          Price: {{productItems.productPrice}} <br>
-          Rating: {{productItems.productRating}}<br>
-        </mat-card-content>
-        <mat-card-actions>
-          <a style="cursor: pointer;" (click)="openDialog('Rate',{productId: productItems.productId})">
-            Rate </a>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+  <div style="display:flex; flex-direction: row;">
+    <mat-card style="border: 1px solid black; width:10%; margin: 1%; height: 10%;" *ngFor="let productItems of products">
+      <mat-card-header>
+        <mat-card-title>{{productItems.productName}}</mat-card-title>
+        <mat-card-subtitle>
+          <img
+          src="../../../../assets/Images/Fridge.jfif"
+          mat-card-avatar />
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          Product Information
+        </p>
+        
+        <mat-list role="list">
+          <mat-list-item role="listitem">Category: {{productItems.productCategory}}</mat-list-item>
+          <mat-list-item role="listitem">Price: {{productItems.productPrice}}</mat-list-item>
+          <mat-list-item role="listitem">Rating: {{productItems.productRating}}</mat-list-item>
+        </mat-list>
+        
+      </mat-card-content>
+  
+      <mat-card-actions>
+        <button mat-raised-button (click)="openDialog('Rate',{productId: productItems.productId})">Rate</button>
+      </mat-card-actions>
+    </mat-card>
   </div>
 
 <button mat-button (click)="openDialog('Add',{});" style="cursor: pointer;">Add Product Details</button>

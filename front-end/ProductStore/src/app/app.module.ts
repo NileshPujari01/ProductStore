@@ -9,10 +9,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductStoreService } from './services/product-store.service';
 import { AdminUserModule } from './admin-user/admin-user.module';
 import { EndUserModule } from './end-user/end-user.module';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LandingPageComponent,
   ],
   imports: [
     BrowserModule,
