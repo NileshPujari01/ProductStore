@@ -12,7 +12,9 @@ No sharing code used at this moment but their is scope for improvement of this a
 
 Angular UI is pathetic at the moment as designing takes lot of time. but i can improve UI if i get enough time :)
 
-Regarding Backend .net core service
+Regarding Backend .net core service, completed parts are
+
+
 clean architecture is used for the project which includes API, application, domain and infrasturcture layer.
 use of entity framework
 repository pattern, unit of work (generally it is not recommended when you use entity framework but due to limited time contraint i used that)
@@ -33,8 +35,9 @@ opentelemetry/prometheus support can be added for measuring metrics
 once opentelemetry is configured, it can be mapped with grafana
 
 
-Regarding angular project
-completed part
+In angular project, completed part are 
+
+
 Insert update delete operations are completed for admin
 admin can browse product and rate them.
 Admin can see list of products in tabular format and can perform CRUD operation from there only
