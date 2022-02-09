@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  @Output() userType: EventEmitter<string> = new EventEmitter<string>();
   title = 'ProductStore';
+  public adminUser = "AdminUser";
+  public endUser = "EndUser";
+  /**
+   *
+   */
+  constructor(private router: Router ) {
+    
+  }
 }

@@ -1,0 +1,88 @@
+{{userType}}
+<div *ngIf="userType === 'EndUser'; else elseTemplate" >
+  <div>User Section</div>
+<div class="row">
+  <div class="col-4" *ngFor="let productItems of products">
+    <mat-card class="seperation">
+      <mat-card-header>
+        <mat-card-title>{{productItems.productName}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        Category: {{productItems.productCategory}} <br>
+        Price: {{productItems.productPrice}} <br>
+        Rating: {{productItems.productRating}}<br>
+      </mat-card-content>
+      <mat-card-actions>
+        <a style="cursor: pointer;" (click)="openDialog('Rate',{productId: productItems.productId})">
+          Rate </a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+</div>
+
+<ng-template #elseTemplate>
+  <div>Admin Section</div>
+  <div class="row">
+    <div class="col-4" *ngFor="let productItems of products">
+      <mat-card class="seperation">
+        <mat-card-header>
+          <mat-card-title>{{productItems.productName}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          Category: {{productItems.productCategory}} <br>
+          Price: {{productItems.productPrice}} <br>
+          Rating: {{productItems.productRating}}<br>
+        </mat-card-content>
+        <mat-card-actions>
+          <a style="cursor: pointer;" (click)="openDialog('Rate',{productId: productItems.productId})">
+            Rate </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+<button mat-button (click)="openDialog('Add',{});" style="cursor: pointer;">Add Product Details</button>
+
+<mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="productId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Id"> ID </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.productId}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="productName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Name"> Name </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.productName}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="productCategory">
+      <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Category"> Category </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.productCategory}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="productPrice">
+      <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Price"> Price </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.productPrice}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="productRating">
+        <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Rating"> Rating </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.productRating}} </mat-cell>
+      </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element" class="action-link"> 
+        <a style="cursor: pointer;" (click)="openDialog('Update',element)">Edit</a> | 
+        <a style="cursor: pointer;" (click)="openDialog('Delete',element)">Delete</a>  
+      </td>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</ng-template>

@@ -1,12 +1,12 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ProductStoreService } from 'src/app/services/product-store.service';
-import { MatTable, MatTableDataSource } from "@angular/material/table";
+import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatDialog } from "@angular/material/dialog";
-import { ProductItems, Products } from 'src/app/models/products';
+import { ProductItems } from 'src/app/models/products';
 import { catchError, map, merge, of, startWith, switchMap } from 'rxjs';
-import { DialogBoxComponent } from 'src/app/dialog-box/dialog-box.component';
+import { DialogBoxComponent } from 'src/app/shared/components/dialog-box/dialog-box.component';
 import { ProductApiRequest, ProductRequest } from 'src/app/models/product-request';
 
 @Component({
@@ -14,70 +14,85 @@ import { ProductApiRequest, ProductRequest } from 'src/app/models/product-reques
   templateUrl: './list-products.component.html',
   styleUrls: ['./list-products.component.scss']
 })
-export class ListProductsComponent implements OnInit {
+export class ListProductsComponent implements OnInit, AfterViewInit {
+  @Input() userType!: string;
+  public newRating!: String;
+  public newRatingVal: number = 0;
 
   displayedColumns = ['productId', 'productName', 'productCategory', 'productPrice', 'productRating', "action"];
-  public dataSource!: ProductItems[];
-  
+  public dataSource = new MatTableDataSource<any>();
+  //public dataSource!: ProductItems[];
+  public products!: ProductItems[];
   productRequest: ProductRequest = new ProductRequest()
   productApiRequest: ProductApiRequest = new ProductApiRequest()
-  
-  @ViewChild(MatTable,{static:true}) table!: MatTable<any>;
-  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  constructor(private service: ProductStoreService, public dialog: MatDialog) { }
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
-  ngOnInit(): void{
+  constructor(
+    public service: ProductStoreService,
+    public dialog: MatDialog) {
+  }
+
+  ngOnInit(): void {
     this.showData();
+
+  }
+
+  ngAfterViewInit() {
+
   }
 
   showData() {
-// this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
 
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-
-    merge(this.sort.sortChange, this.paginator.page)
+    merge()
       .pipe(
         startWith({}),
         switchMap(() => {
-          return this.service.getProducts(this.sort.active, this.sort.direction, this.paginator.pageIndex);}),
+          return this.service.getProducts();
+        }),
         map(data => {
           return data;
         }),
         catchError(() => {
           return of([]);
         })
-      ).subscribe(data => {this.dataSource = data.products});      
+      ).subscribe(data => { this.dataSource = data.products, this.products = data.products });
+
+    //this.dataSource = new MatTableDataSource(this.products);
+
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      if (property.includes('.')) return property.split('.').reduce((o, i) => o[i], item)
+      return item[property];
+    };
+    this.dataSource.sort = this.sort
+
   }
 
-  openDialog(action: any,obj: any) {
+  openDialog(action: any, obj: any) {
     obj.action = action;
+    obj.userType = this.userType;
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '250px',
-      data:obj
+      data: obj
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result.event == 'Add'){
+      if (result.event == 'Add') {
         this.addRowData(result.data);
-      }else if(result.event == 'Update'){
+      } else if (result.event == 'Update') {
         this.updateRowData(result.data);
-      }else if(result.event == 'Delete'){
+      } else if (result.event == 'Delete') {
         this.deleteRowData(result.data);
+      } else if (result.event == 'Rate') {
+        this.rateProduct(result.data);
       }
     });
   }
 
-  addRowData(row_obj: any){
-    this.dataSource.push({
-      productId: row_obj.productId,
-      productName:row_obj.productName,
-      productCategory:row_obj.productCategory,
-      productPrice:row_obj.productPrice,
-      productRating:row_obj.productRating
-    });
+  addRowData(row_obj: any) {
+
     this.productApiRequest.productName = row_obj.productName;
     this.productApiRequest.productCategory = row_obj.productCategory;
     this.productApiRequest.productPrice = row_obj.productPrice;
@@ -88,20 +103,13 @@ export class ListProductsComponent implements OnInit {
     }, (error) => {
       alert(`Issue while saving data`);
     });
-   
+
     this.showData();
-    
+
   }
-  updateRowData(row_obj: any){
-    this.dataSource = this.dataSource.filter((value,key)=>{
-      if(value.productId == row_obj.productId){
-        value.productName = row_obj.productName;
-        value.productCategory = row_obj.productCategory;
-        value.productPrice = row_obj.productPrice;
-        value.productRating = row_obj.productRating;
-      }
-      return true;
-    });
+
+  updateRowData(row_obj: any) {
+
     this.productApiRequest.productId = row_obj.productId;
     this.productApiRequest.productName = row_obj.productName;
     this.productApiRequest.productCategory = row_obj.productCategory;
@@ -117,16 +125,19 @@ export class ListProductsComponent implements OnInit {
     this.showData();
   }
 
-  deleteRowData(row_obj: any){
-    this.dataSource = this.dataSource.filter((value,key)=>{
-      return value.productId != row_obj.productId;
-    });
+  deleteRowData(row_obj: any) {
     this.service.deleteProduct(row_obj.productId).subscribe(x => {
       alert(`${row_obj.productName} deleted successfully`);
     }, (error) => {
       alert(`Issue while deletion`);
     });
 
+    this.showData();
+  }
+
+  public rateProduct(result: any) {
+    this.service.rateProduct(result.productId, result.productRating).subscribe(x => {
+    });
     this.showData();
   }
 }

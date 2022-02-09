@@ -1,6 +1,6 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProductItems } from '../models/products';
+import { ProductItems } from '../../../models/products';
 
 @Component({
   selector: 'app-dialog-box',
@@ -8,7 +8,7 @@ import { ProductItems } from '../models/products';
   styleUrls: ['./dialog-box.component.scss']
 })
 export class DialogBoxComponent{
-
+  public userType!: string;
   action:string;
   local_data:any;
 
@@ -19,6 +19,7 @@ export class DialogBoxComponent{
     console.log(data);
     this.local_data = {...data};
     this.action = this.local_data.action;
+    this.userType = this.local_data.userType;
   }
 
   doAction(){
