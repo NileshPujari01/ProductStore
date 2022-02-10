@@ -51,6 +51,46 @@ namespace ProductStore.Application.Tests.Services
                 ProductCategoryId = 1,
                 ProductCategoryName = "Product1"
             };
+            var productResponseItem2 = new ProductCategoryResponseItems
+            {
+                ProductCategoryId = 2,
+                ProductCategoryName = "Product2"
+            };
+
+            var categories = new List<ProductCategoryResponseItems>();
+            categories.Add(productResponseItem1);
+            categories.Add(productResponseItem2);
+
+            var expectedResult = new ProductCategoryResponse
+            {
+                ProductCategories = categories
+            };
+
+
+            var entityItems1 = new ProductCategoryEntity { ProductCategoryId = 1, ProductCategoryName = "Product1" };
+            var entityItems2 = new ProductCategoryEntity { ProductCategoryId = 2, ProductCategoryName = "Product2" };
+
+            var entityData = new List<ProductCategoryEntity> { entityItems1, entityItems2 };
+            var readOnlyList = new ReadOnlyCollection<ProductCategoryEntity>(entityData);
+
+            _productCategoryRepository.GetAllAsync().Returns(readOnlyList);
+
+            //Act
+            var result = await _dataService.GetProductCategories();
+
+            //Assert
+            result.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Fact]
+        public async Task Return_Product_Category_By_Id()
+        {
+            //Arrange
+            var productResponseItem1 = new ProductCategoryResponseItems
+            {
+                ProductCategoryId = 1,
+                ProductCategoryName = "Product1"
+            };
            
 
             var categories = new List<ProductCategoryResponseItems>();
@@ -68,7 +108,7 @@ namespace ProductStore.Application.Tests.Services
             _productCategoryRepository.GetByIdAsync(1).Returns(entityItems1);
 
             //Act
-            var result = await _dataService.GetProductCategories(new ProductCategoryRequest { ProductCategoryId = 1 });
+            var result = await _dataService.GetProductCategoryById(new ProductCategoryRequest { ProductCategoryId = 1 });
 
             //Assert
             result.Should().BeEquivalentTo(expectedResult);

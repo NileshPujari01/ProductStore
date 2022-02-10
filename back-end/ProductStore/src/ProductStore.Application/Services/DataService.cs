@@ -37,7 +37,23 @@ namespace ProductStore.Application.Services
             _dataContext = new ProductStoreDataContext(new DbContextOptions<ProductStoreDataContext>(), connectionStringProvider);
         }
 
-        public async Task<ProductCategoryResponse> GetProductCategories(ProductCategoryRequest categoryRequest)
+        public async Task<ProductCategoryResponse> GetProductCategories()
+        {
+            var productCategoriesData = await _productCategoryRepository.GetAllAsync();
+
+            var productCategories = productCategoriesData.Select(data => new ProductCategoryResponseItems 
+            {
+                ProductCategoryId = data.ProductCategoryId,
+                ProductCategoryName = data.ProductCategoryName
+            });
+
+            return new ProductCategoryResponse
+            {
+                ProductCategories = productCategories
+            };
+        }
+
+        public async Task<ProductCategoryResponse> GetProductCategoryById(ProductCategoryRequest categoryRequest)
         {
             var productCategoriesData = await _productCategoryRepository.GetByIdAsync(categoryRequest.ProductCategoryId);
 
@@ -74,22 +90,6 @@ namespace ProductStore.Application.Services
 
         public async Task<ProductsResponse> GetProducts()
         {
-            //var productsData = await _productsRepository.GetAllAsync();
-
-            //var products = productsData.Select(s => new ProductsResponseItems()
-            //{
-            //    ProductId= s.ProductId,
-            //    ProductName = s.ProductName,
-            //    ProductCategory = s.ProductCategory,
-            //    ProductPrice = s.ProductPrice,
-            //    ProductRating = s.ProductRating
-            //});
-
-            //return new ProductsResponse
-            //{
-            //    Products = products
-            //};
-
             var productData = from p in _dataContext.Products
                               from pc in _dataContext.ProductCategory.Where(x => x.ProductCategoryId == p.ProductCategory).DefaultIfEmpty()
                               from pi in _dataContext.ProductImages.Where(x => x.ProductId == p.ProductId).DefaultIfEmpty()

@@ -1,21 +1,27 @@
 <div mat-dialog-content>
-
+<mat-label>{{action}} Action</mat-label>
+<br/>
   <mat-form-field *ngIf="action !== 'Delete' && action === 'Rate'; else adminTemplate">
-    <input placeholder="{{action}} Product Rating" matInput [(ngModel)]="local_data.productRating">
+    <input placeholder="Product Rating" matInput [(ngModel)]="local_data.productRating">
   </mat-form-field>
   <ng-template #adminTemplate>
     <div *ngIf="action !== 'Delete' && userType === 'AdminUser'; else elseTemplate">
     <mat-form-field >
-      <input placeholder="{{action}} Product Name" matInput [(ngModel)]="local_data.productName">
+      <input placeholder="Product Name" matInput [(ngModel)]="local_data.productName">
     </mat-form-field>
     <mat-form-field>
-      <input placeholder="{{action}} Product Category" matInput [(ngModel)]="local_data.productCategory">
+        <mat-label>Product Category</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let item of categoryList || []" [value]="item.productCategoryId">
+            {{item.productCategoryName}}
+          </mat-option>
+        </mat-select>
     </mat-form-field>
     <mat-form-field>
-    <input placeholder="{{action}} Product Price" matInput [(ngModel)]="local_data.productPrice">
+    <input placeholder="Product Price" matInput [(ngModel)]="local_data.productPrice">
   </mat-form-field>
   <mat-form-field>
-      <input placeholder="{{action}} Product Rating" matInput [(ngModel)]="local_data.productRating">
+      <input placeholder="Product Rating" matInput [(ngModel)]="local_data.productRating">
     </mat-form-field>
   </div>
   </ng-template>

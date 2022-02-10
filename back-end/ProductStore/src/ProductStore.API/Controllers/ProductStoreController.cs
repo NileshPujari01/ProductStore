@@ -18,10 +18,19 @@ namespace ProductStore.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetProductCategories")]
-        public async Task<IActionResult> GetProductCategories([FromBody] ProductCategoryQuery categoryRequest)
+        [Route("GetProductCategoryById")]
+        public async Task<IActionResult> GetProductCategoryById([FromBody] ProductCategoryQueryById categoryRequest)
         {
             var productCategories = await _mediator.Send(categoryRequest);
+
+            return Ok(productCategories);
+        }
+
+        [HttpGet]
+        [Route("GetProductCategories")]
+        public async Task<IActionResult> GetProductCategories()
+        {
+            var productCategories = await _mediator.Send(new ProductCategoryQuery());
 
             return Ok(productCategories);
         }

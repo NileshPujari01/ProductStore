@@ -3,7 +3,6 @@ using MediatR;
 using ProductStore.API.Models;
 using ProductStore.API.Queries;
 using ProductStore.Application.Interfaces;
-using ProductStore.Application.Models.Request;
 
 namespace ProductStore.API.Handlers
 {
@@ -20,8 +19,7 @@ namespace ProductStore.API.Handlers
 
         public async Task<ProductCategoryResult> Handle(ProductCategoryQuery request, CancellationToken cancellationToken)
         {
-            var categoryRequest = _mapper.Map<ProductCategoryRequest>(request.Request);
-            var dataResponse = await _dataService.GetProductCategories(categoryRequest);
+            var dataResponse = await _dataService.GetProductCategories();
             var response = _mapper.Map<ProductCategoryResult>(dataResponse);
             return response;
         }

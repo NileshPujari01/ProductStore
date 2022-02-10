@@ -6,7 +6,8 @@ namespace ProductStore.Application.Interfaces
 {
     public interface IDataService
     {
-        Task<ProductCategoryResponse> GetProductCategories(ProductCategoryRequest categoryRequest);
+        Task<ProductCategoryResponse> GetProductCategories();
+        Task<ProductCategoryResponse> GetProductCategoryById(ProductCategoryRequest categoryRequest);
         Task<ProductImagesResponse> GetProductImages();
         Task<ProductsResponse> GetProducts();
         Task<SetProductRatingResponse> SetProductRating(SetProductRatingRequest ratingRequest);

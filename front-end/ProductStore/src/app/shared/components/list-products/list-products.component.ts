@@ -136,8 +136,4 @@ export class ListProductsComponent implements OnInit{
     });
     this.showData();
   }
-
-  public getCategoryName(categoryId: number) {
-    return this.service.getCategory(categoryId).subscribe(x => {console.log(x);});
-  }
 }
