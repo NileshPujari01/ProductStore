@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ProductStoreService } from 'src/app/services/product-store.service';
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
@@ -36,34 +36,13 @@ export class ListProductsComponent implements OnInit{
 
   ngOnInit(): void {
     this.showData();
-
   }
 
   showData() {
-    // this.dataSource.paginator = this.paginator;
-
-    merge()
-      .pipe(
-        startWith({}),
-        switchMap(() => {
-          return this.service.getProducts();
-        }),
-        map(data => {
-          return data;
-        }),
-        catchError(() => {
-          return of([]);
-        })
-      ).subscribe(data => { this.dataSource = data.products, this.products = data.products });
-
-    //this.dataSource = new MatTableDataSource(this.products);
-
-    this.dataSource.sortingDataAccessor = (item, property) => {
-      if (property.includes('.')) return property.split('.').reduce((o, i) => o[i], item)
-      return item[property];
-    };
-    this.dataSource.sort = this.sort
-
+    return this.service.getProducts().subscribe(data => { 
+      this.dataSource = data.products, 
+      this.products = data.products 
+    });
   }
 
   openDialog(action: any, obj: any) {
@@ -96,12 +75,10 @@ export class ListProductsComponent implements OnInit{
     this.productRequest.productRequest = this.productApiRequest;
     this.service.createProduct(this.productRequest).subscribe(x => {
       alert(`${row_obj.productName} saved successfully`);
+      this.showData();
     }, (error) => {
       alert(`Issue while saving data`);
     });
-
-    this.showData();
-
   }
 
   updateRowData(row_obj: any) {
@@ -113,26 +90,24 @@ export class ListProductsComponent implements OnInit{
     this.productRequest.productRequest = this.productApiRequest;
     this.service.updateProduct(this.productRequest).subscribe(x => {
       alert(`${row_obj.productName} saved successfully`);
+      this.showData();
     }, (error) => {
       alert(`Issue while saving data`);
     });
-
-    this.showData();
   }
 
   deleteRowData(row_obj: any) {
     this.service.deleteProduct(row_obj.productId).subscribe(x => {
       alert(`${row_obj.productName} deleted successfully`);
+      this.showData();
     }, (error) => {
       alert(`Issue while deletion`);
     });
-
-    this.showData();
   }
 
   public rateProduct(result: any) {
     this.service.rateProduct(result.productId, result.productRating).subscribe(x => {
+      this.showData();
     });
-    this.showData();
   }
 }

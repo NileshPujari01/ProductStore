@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit, Optional } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, Inject, OnChanges, OnInit, Optional, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { productCategory } from 'src/app/models/product-category';
 import { ProductStoreService } from 'src/app/services/product-store.service';
@@ -16,8 +16,10 @@ export class DialogBoxComponent implements OnInit {
   local_data:any;
   public categoryList!: any[];
   public selectedValue!: number;
-
+  form!: FormGroup;
+  
   constructor(
+    public fb: FormBuilder,
     public _productService: ProductStoreService,
     public dialogRef: MatDialogRef<DialogBoxComponent>,
     //@Optional() is used to prevent error if no data is passed
@@ -26,15 +28,21 @@ export class DialogBoxComponent implements OnInit {
     this.action = this.local_data.action;
     this.userType = this.local_data.userType;
     this._productService.getCategory().subscribe(x => {this.categoryList = x.productCategories});
-  }
-
-  ngOnInit(): void {
     this.selectedValue = this.local_data.productCategory;
   }
 
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      productId : this.local_data.productId,
+      productName: ["productName", Validators.required],
+      productCategory: ["productCategory", Validators.required],
+      productPrice: ["productPrice", Validators.required],
+      productRating: ["productRating", Validators.required]
+    });
+  }
+
   doAction(){
-    console.log(this.local_data);
-    this.dialogRef.close({event:this.action,data:this.local_data});
+    this.dialogRef.close({event:this.action,data:this.form.value});
   }
 
   closeDialog(){
