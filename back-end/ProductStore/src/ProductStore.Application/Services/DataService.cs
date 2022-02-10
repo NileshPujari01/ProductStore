@@ -37,14 +37,16 @@ namespace ProductStore.Application.Services
             _dataContext = dataContext;
         }
 
-        public async Task<ProductCategoryResponse> GetProductCategories()
+        public async Task<ProductCategoryResponse> GetProductCategories(ProductCategoryRequest categoryRequest)
         {
-            var productCategoriesData = await _productCategoryRepository.GetAllAsync();
+            var productCategoriesData = await _productCategoryRepository.GetByIdAsync(categoryRequest.ProductCategoryId);
 
-            var productCategories = productCategoriesData.Select(s => new ProductCategoryResponseItems()
+            var productCategories = new List<ProductCategoryResponseItems>();
+
+            productCategories.Add(new ProductCategoryResponseItems
             {
-                ProductCategoryId = s.ProductCategoryId,
-                ProductCategoryName = s.ProductCategoryName
+                ProductCategoryId = productCategoriesData.ProductCategoryId,
+                ProductCategoryName = productCategoriesData.ProductCategoryName
             });
 
             return new ProductCategoryResponse
@@ -90,13 +92,16 @@ namespace ProductStore.Application.Services
 
             var productData = from p in _dataContext.Products
                               from pc in _dataContext.ProductCategory.Where(x => x.ProductCategoryId == p.ProductCategory).DefaultIfEmpty()
+                              from pi in _dataContext.ProductImages.Where(x => x.ProductId == p.ProductId).DefaultIfEmpty()
                               select new
                               {
                                   ProductId = p.ProductId,
                                   ProductName = p.ProductName,
-                                  ProductCategory = pc.ProductCategoryName,
+                                  ProductCategory = pc.ProductCategoryId,
                                   ProductPrice = p.ProductPrice,
-                                  ProductRating = p.ProductRating
+                                  ProductRating = p.ProductRating,
+                                  ProductImage = pi.ProductImageName,
+                                  ProductCategoryName = pc.ProductCategoryName
                               };
 
             var products = productData.Select(x => new ProductsResponseItems
@@ -105,7 +110,9 @@ namespace ProductStore.Application.Services
                 ProductName = x.ProductName,
                 ProductCategory = x.ProductCategory,
                 ProductPrice = x.ProductPrice,
-                ProductRating = x.ProductRating
+                ProductRating = x.ProductRating,
+                ProductImageLink = x.ProductImage,
+                ProductCategoryName = x.ProductCategoryName
             });
 
             return new ProductsResponse

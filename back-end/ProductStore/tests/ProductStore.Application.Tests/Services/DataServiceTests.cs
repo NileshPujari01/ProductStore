@@ -8,6 +8,7 @@ using ProductStore.Application.Models.Response;
 using ProductStore.Application.Services;
 using ProductStore.Domain.Entities;
 using ProductStore.Infrastructure.Abstractions;
+using ProductStore.Infrastructure.Persistence;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace ProductStore.Application.Tests.Services
             _productsRepository = Substitute.For<IProductsRepository>();
             _mapper = Substitute.For<IMapper>();
 
-            _dataService = new DataService(_logger, _productCategoryRepository, _productImagesRepository, _productsRepository, _mapper);
+        _dataService = new DataService(_logger, _productCategoryRepository, _productImagesRepository, _productsRepository, _mapper);
         }
 
         [Fact]
@@ -45,15 +46,11 @@ namespace ProductStore.Application.Tests.Services
                 ProductCategoryId = 1,
                 ProductCategoryName = "Product1"
             };
-            var productResponseItem2 = new ProductCategoryResponseItems
-            {
-                ProductCategoryId = 2,
-                ProductCategoryName = "Product2"
-            };
+           
 
             var categories = new List<ProductCategoryResponseItems>();
             categories.Add(productResponseItem1);
-            categories.Add(productResponseItem2);
+           
 
             var expectedResult = new ProductCategoryResponse
             {
@@ -62,15 +59,11 @@ namespace ProductStore.Application.Tests.Services
 
 
             var entityItems1 = new ProductCategoryEntity { ProductCategoryId = 1, ProductCategoryName = "Product1" };
-            var entityItems2 = new ProductCategoryEntity { ProductCategoryId = 2, ProductCategoryName = "Product2" };
 
-            var entityData = new List<ProductCategoryEntity> { entityItems1, entityItems2 };
-            var readOnlyList = new ReadOnlyCollection<ProductCategoryEntity>(entityData);
-
-            _productCategoryRepository.GetAllAsync().Returns(readOnlyList);
+            _productCategoryRepository.GetByIdAsync(1).Returns(entityItems1);
 
             //Act
-            var result = await _dataService.GetProductCategories();
+            var result = await _dataService.GetProductCategories(new ProductCategoryRequest { ProductCategoryId = 1 });
 
             //Assert
             result.Should().BeEquivalentTo(expectedResult);
@@ -175,7 +168,7 @@ namespace ProductStore.Application.Tests.Services
             var entityData = new List<ProductsEntity> { entityItems1, entityItems2 };
             var readOnlyList = new ReadOnlyCollection<ProductsEntity>(entityData);
 
-            _productsRepository.GetAllAsync().Returns(readOnlyList);
+            //_productsRepository.GetAllAsync().Returns(readOnlyList);
 
             //Act
             var result = await _dataService.GetProducts();

@@ -8,4 +8,6 @@ export class ProductItems {
     productCategory!: number;
     productPrice!: string;
     productRating!: number;
+    productImage!: string;
+    productCategoryName!: string;
 }

@@ -14,7 +14,7 @@ import { ProductApiRequest, ProductRequest } from 'src/app/models/product-reques
   templateUrl: './list-products.component.html',
   styleUrls: ['./list-products.component.scss']
 })
-export class ListProductsComponent implements OnInit, AfterViewInit {
+export class ListProductsComponent implements OnInit{
   @Input() userType!: string;
   public newRating!: String;
   public newRatingVal: number = 0;
@@ -36,10 +36,6 @@ export class ListProductsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.showData();
-
-  }
-
-  ngAfterViewInit() {
 
   }
 
@@ -139,5 +135,9 @@ export class ListProductsComponent implements OnInit, AfterViewInit {
     this.service.rateProduct(result.productId, result.productRating).subscribe(x => {
     });
     this.showData();
+  }
+
+  public getCategoryName(categoryId: number) {
+    return this.service.getCategory(categoryId).subscribe(x => {console.log(x);});
   }
 }

@@ -9,8 +9,10 @@
     {
         public int ProductId { get; set; }
         public string? ProductName { get; set; }
-        public string? ProductCategory { get; set; }
+        public int ProductCategory { get; set; }
         public double ProductPrice { get; set; }
         public int ProductRating { get; set; }
+        public string? ProductImageLink { get; set; }
+        public string? ProductCategoryName { get; set; }
     }
 }

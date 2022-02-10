@@ -40,6 +40,17 @@ export class ProductStoreService {
     return this._httpClient.delete(`${environment.productStoreApiHost}ProductStore/DeleteProduct`,options );
   }
 
+  getCategory(category: number): Observable<any> {
+    const options = {
+    headers: { 'content-type': 'application/json'}  ,
+    body: {
+      request: {
+        categoryId: category
+    }},
+  };
+    return this._httpClient.get<any>(`${environment.productStoreApiHost}ProductStore/GetProductCategories`,options);
+ }
+
   rateProduct(productId: number, productRating: number){
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify({ratingRequest : {

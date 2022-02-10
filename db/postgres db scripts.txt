@@ -40,3 +40,23 @@ union all
 select 'Fridge',1,9,3
 union all
 select 'Shirt',2,5,3
+union all
+select 'Mobile',1,5,3
+union all
+select 'T-Shirt',2,5,3
+union all
+select 'WashingMachine',1,5,3 (edited) 
+
+
+insert into product_images (product_id, image_name)
+select 1,'TV'
+union all
+select 2,'Fridge'
+union all
+select 3,'Shirt'
+union all
+select 4,'Mobile'
+union all
+select 5,'T-Shirt'
+union all
+select 6,'WashingMachine'

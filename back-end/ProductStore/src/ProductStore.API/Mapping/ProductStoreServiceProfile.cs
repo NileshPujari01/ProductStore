@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ProductStore.API.Queries;
 using apiModel = ProductStore.API.Models;
 using applicationModel = ProductStore.Application.Models;
 
@@ -8,6 +9,10 @@ namespace ProductStore.API.Mapping
     {
         public ProductStoreServiceProfile()
         {
+
+            CreateMap<apiModel.Request.CategoryRequest, applicationModel.Request.ProductCategoryRequest>()
+                .ForMember(dest => dest.ProductCategoryId, opt => opt.MapFrom(dest => dest.CategoryId));
+
             CreateMap<applicationModel.ProductCategoryResponseItems, apiModel.ProductCategoryResponseItems>();
             CreateMap<applicationModel.ProductCategoryResponse, apiModel.ProductCategoryResult>()
                 .ForMember(dest => dest.ProductCategories, opt => opt.MapFrom(dest => dest.ProductCategories));
@@ -16,7 +21,9 @@ namespace ProductStore.API.Mapping
             CreateMap<applicationModel.ProductImagesResponse, apiModel.ProductImagesResult>()
                 .ForMember(dest => dest.ProductImages, opt => opt.MapFrom(dest => dest.ProductImages));
 
-            CreateMap<applicationModel.ProductsResponseItems, apiModel.ProductsResponseItems>();
+            CreateMap<applicationModel.ProductsResponseItems, apiModel.ProductsResponseItems>()
+                .ForMember(dest => dest.ProductImage, opt => opt.MapFrom(dest => dest.ProductImageLink));
+
             CreateMap<applicationModel.ProductsResponse, apiModel.ProductsResult>()
                 .ForMember(dest => dest.Products, opt => opt.MapFrom(dest => dest.Products));
 

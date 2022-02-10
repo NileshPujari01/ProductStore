@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ProductStore.API.Commands;
+using ProductStore.API.Models.Request;
 using ProductStore.API.Queries;
 
 namespace ProductStore.API.Controllers
@@ -18,9 +19,9 @@ namespace ProductStore.API.Controllers
 
         [HttpGet]
         [Route("GetProductCategories")]
-        public async Task<IActionResult> GetProductCategories()
+        public async Task<IActionResult> GetProductCategories([FromBody] ProductCategoryQuery categoryRequest)
         {
-            var productCategories = await _mediator.Send(new ProductCategoryQuery());
+            var productCategories = await _mediator.Send(categoryRequest);
 
             return Ok(productCategories);
         }
