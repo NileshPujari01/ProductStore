@@ -67,7 +67,6 @@ export class ListProductsComponent implements OnInit{
   }
 
   addRowData(row_obj: any) {
-
     this.productApiRequest.productName = row_obj.productName;
     this.productApiRequest.productCategory = row_obj.productCategory;
     this.productApiRequest.productPrice = row_obj.productPrice;
@@ -89,7 +88,7 @@ export class ListProductsComponent implements OnInit{
     this.productApiRequest.productRating = row_obj.productRating;
     this.productRequest.productRequest = this.productApiRequest;
     this.service.updateProduct(this.productRequest).subscribe(x => {
-      alert(`${row_obj.productName} saved successfully`);
+      alert(`${row_obj.productName} updated successfully`);
       this.showData();
     }, (error) => {
       alert(`Issue while saving data`);
@@ -98,7 +97,7 @@ export class ListProductsComponent implements OnInit{
 
   deleteRowData(row_obj: any) {
     this.service.deleteProduct(row_obj.productId).subscribe(x => {
-      alert(`${row_obj.productName} deleted successfully`);
+      alert(`Record deleted successfully`);
       this.showData();
     }, (error) => {
       alert(`Issue while deletion`);
