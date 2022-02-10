@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using ProductStore.Application.Models;
@@ -25,6 +26,8 @@ namespace ProductStore.Application.Tests.Services
         private readonly IProductImagesRepository _productImagesRepository;
         private readonly IProductsRepository _productsRepository;
         private readonly IMapper _mapper;
+        private readonly IConnectionStringProvider _connectionStringProvider;
+        private readonly ProductStoreDataContext _dataContext;
 
         public DataServiceTests()
         {
@@ -33,8 +36,10 @@ namespace ProductStore.Application.Tests.Services
             _productImagesRepository = Substitute.For<IProductImagesRepository>();
             _productsRepository = Substitute.For<IProductsRepository>();
             _mapper = Substitute.For<IMapper>();
+            _connectionStringProvider = Substitute.For<IConnectionStringProvider>();
+            _dataContext = new ProductStoreDataContext(new DbContextOptions<ProductStoreDataContext>(), _connectionStringProvider);
 
-        _dataService = new DataService(_logger, _productCategoryRepository, _productImagesRepository, _productsRepository, _mapper);
+            _dataService = new DataService(_logger, _productCategoryRepository, _productImagesRepository, _productsRepository, _mapper, _connectionStringProvider);
         }
 
         [Fact]
@@ -166,10 +171,10 @@ namespace ProductStore.Application.Tests.Services
             };
 
             var entityData = new List<ProductsEntity> { entityItems1, entityItems2 };
-            var readOnlyList = new ReadOnlyCollection<ProductsEntity>(entityData);
+            //var readOnlyList = new ReadOnlyCollection<ProductsEntity>(entityData);
 
             //_productsRepository.GetAllAsync().Returns(readOnlyList);
-
+            _connectionStringProvider.GetConnectionString().Returns("Server=127.0.0.1;port=5432;user id=postgres;password=admin;database=ProductStore;pooling=true;");
             //Act
             var result = await _dataService.GetProducts();
 

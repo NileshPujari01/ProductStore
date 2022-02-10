@@ -31,9 +31,10 @@ namespace ProductStore.API
                 .AllowAnyHeader();
             }));
 
-            services.AddDbContext<ProductStoreDataContext>(options => 
-                options.UseNpgsql(Configuration.GetConnectionString("ProductStoreConnectionString"))
-            );
+            //services.AddDbContext<ProductStoreDataContext>(options => 
+            //    options.UseNpgsql(Configuration.GetConnectionString("ProductStoreConnectionString"))
+            //);
+            services.AddDbContext<ProductStoreDataContext>();
             services.AddMvc(options => { options.EnableEndpointRouting = false; });
             services.AddControllers();
             services.AddAutoMapper(GetMapperProfileAssemblies());

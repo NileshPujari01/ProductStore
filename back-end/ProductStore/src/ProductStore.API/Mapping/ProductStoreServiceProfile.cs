@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ProductStore.API.Queries;
 using apiModel = ProductStore.API.Models;
 using applicationModel = ProductStore.Application.Models;
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ProductStore.Infrastructure.Abstractions;
+using ProductStore.Infrastructure.Persistence;
 using ProductStore.Infrastructure.Repositories;
 
 namespace ProductStore.Infrastructure.Extensions
@@ -11,6 +12,7 @@ namespace ProductStore.Infrastructure.Extensions
             services.AddTransient<IProductCategoryRepository, ProductCategoryRepository>();
             services.AddTransient<IProductImagesRepository, ProductImagesRepository>();
             services.AddTransient<IProductsRepository, ProductsRepository>();
+            services.AddTransient<IConnectionStringProvider, ConnectionStringProvider>();
 
             return services;
         }

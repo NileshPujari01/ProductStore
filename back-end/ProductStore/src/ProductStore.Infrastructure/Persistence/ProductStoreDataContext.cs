@@ -6,16 +6,26 @@ namespace ProductStore.Infrastructure.Persistence
 {
     public class ProductStoreDataContext : DbContext
     {
-        public ProductStoreDataContext(DbContextOptions<ProductStoreDataContext> options) : base(options)
+        private readonly IConnectionStringProvider _connectionStringProvider;
+        public ProductStoreDataContext(
+            DbContextOptions<ProductStoreDataContext> options, 
+            IConnectionStringProvider connectionStringProvider) : base(options)
         {
-
+            _connectionStringProvider = connectionStringProvider;
         }
 
         public DbSet<ProductCategoryEntity> ProductCategory { get; set; }
         public DbSet<ProductImagesEntity> ProductImages { get; set; }
         public DbSet<ProductsEntity> Products { get; set; }
 
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql(_connectionStringProvider.GetConnectionString());
+            }
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

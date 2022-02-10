@@ -26,7 +26,7 @@ namespace ProductStore.Application.Services
             IProductImagesRepository productImagesRepository,
             IProductsRepository productsRepository,
             IMapper mapper,
-            ProductStoreDataContext dataContext
+            IConnectionStringProvider connectionStringProvider
             )
         {
             _logger = logger;
@@ -34,7 +34,7 @@ namespace ProductStore.Application.Services
             _productImagesRepository = productImagesRepository;
             _productsRepository = productsRepository;
             _mapper = mapper;
-            _dataContext = dataContext;
+            _dataContext = new ProductStoreDataContext(new DbContextOptions<ProductStoreDataContext>(), connectionStringProvider);
         }
 
         public async Task<ProductCategoryResponse> GetProductCategories(ProductCategoryRequest categoryRequest)
