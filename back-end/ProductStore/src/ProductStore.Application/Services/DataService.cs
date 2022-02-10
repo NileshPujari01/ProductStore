@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProductStore.Application.Interfaces;
 using ProductStore.Application.Models;
@@ -6,6 +7,7 @@ using ProductStore.Application.Models.Request;
 using ProductStore.Application.Models.Response;
 using ProductStore.Domain.Entities;
 using ProductStore.Infrastructure.Abstractions;
+using ProductStore.Infrastructure.Persistence;
 
 namespace ProductStore.Application.Services
 {
@@ -16,13 +18,15 @@ namespace ProductStore.Application.Services
         private readonly IProductImagesRepository _productImagesRepository;
         private readonly IProductsRepository _productsRepository;
         private readonly IMapper _mapper;
+        private readonly ProductStoreDataContext _dataContext;
 
         public DataService(
             ILogger<DataService> logger,
             IProductCategoryRepository productCategoryRepository,
             IProductImagesRepository productImagesRepository,
             IProductsRepository productsRepository,
-            IMapper mapper
+            IMapper mapper,
+            ProductStoreDataContext dataContext
             )
         {
             _logger = logger;
@@ -30,6 +34,7 @@ namespace ProductStore.Application.Services
             _productImagesRepository = productImagesRepository;
             _productsRepository = productsRepository;
             _mapper = mapper;
+            _dataContext = dataContext;
         }
 
         public async Task<ProductCategoryResponse> GetProductCategories()
@@ -67,15 +72,40 @@ namespace ProductStore.Application.Services
 
         public async Task<ProductsResponse> GetProducts()
         {
-            var productsData = await _productsRepository.GetAllAsync();
+            //var productsData = await _productsRepository.GetAllAsync();
 
-            var products = productsData.Select(s => new ProductsResponseItems()
+            //var products = productsData.Select(s => new ProductsResponseItems()
+            //{
+            //    ProductId= s.ProductId,
+            //    ProductName = s.ProductName,
+            //    ProductCategory = s.ProductCategory,
+            //    ProductPrice = s.ProductPrice,
+            //    ProductRating = s.ProductRating
+            //});
+
+            //return new ProductsResponse
+            //{
+            //    Products = products
+            //};
+
+            var productData = from p in _dataContext.Products
+                              from pc in _dataContext.ProductCategory.Where(x => x.ProductCategoryId == p.ProductCategory).DefaultIfEmpty()
+                              select new
+                              {
+                                  ProductId = p.ProductId,
+                                  ProductName = p.ProductName,
+                                  ProductCategory = pc.ProductCategoryName,
+                                  ProductPrice = p.ProductPrice,
+                                  ProductRating = p.ProductRating
+                              };
+
+            var products = productData.Select(x => new ProductsResponseItems
             {
-                ProductId= s.ProductId,
-                ProductName = s.ProductName,
-                ProductCategory = s.ProductCategory,
-                ProductPrice = s.ProductPrice,
-                ProductRating = s.ProductRating
+                ProductId = x.ProductId,
+                ProductName = x.ProductName,
+                ProductCategory = x.ProductCategory,
+                ProductPrice = x.ProductPrice,
+                ProductRating = x.ProductRating
             });
 
             return new ProductsResponse
