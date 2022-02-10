@@ -105,7 +105,6 @@ export class ListProductsComponent implements OnInit{
   }
 
   updateRowData(row_obj: any) {
-
     this.productApiRequest.productId = row_obj.productId;
     this.productApiRequest.productName = row_obj.productName;
     this.productApiRequest.productCategory = row_obj.productCategory;
