@@ -11,9 +11,11 @@ if it runs on different port then you need to change environment variable of FE 
 No sharing code used at this moment but their is scope for improvement of this application.
 
 Angular UI is pathetic at the moment as designing takes lot of time. but i can improve UI if i get enough time :)
+***********************************************************************************************************
+
+.Net Project
 
 Regarding Backend .net core service, completed parts are
-
 
 clean architecture is used for the project which includes API, application, domain and infrasturcture layer.
 use of entity framework
@@ -22,10 +24,9 @@ CQRS pattern for keeping read and write responsibility seperation
 Automapper has been used for model mapping.
 
 pending part
-entity framework is not used properly. Need some refactoring on that part
 need to add support for SQL server, it would be single line change
-unit tests for services
 supporting scripts for MS SQL needs to be added. postgres one are already shared.
+
 
 Additions
 in .net core service, you might see additional step between API and application layer communication. that can be removed but i wanted to add GRPC support so i kept for that now.
@@ -34,9 +35,10 @@ in short, when GRPC support is being added in application (separate API portion 
 opentelemetry/prometheus support can be added for measuring metrics
 once opentelemetry is configured, it can be mapped with grafana
 
+*****************************************************************************************************************************
+Angular Project
 
 In angular project, completed part are 
-
 
 Insert update delete operations are completed for admin
 admin can browse product and rate them.
