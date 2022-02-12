@@ -3,7 +3,9 @@ The backedn of this project is build in .net6.0 and front end is built in angula
 
 
 How to run the Project
-.net core service is developed in .net 6.0. So, to run the service, you should have vs2022. just download the project and run it on local. 
+.net core service is developed in .net 6.0. So, to run the service, you should have vs2022. 
+to run .net core project, open solution in vs and press f5. it will run on your local. I have not added docker support as i have least knowledge on that.
+to run angular project, once you open application in vs code, then perform "npm install" first and then run ng serve.
 I have set the application to run on specific port on localhost. 
 service link needs to be added in environment.ts file in angular project. 
 if it runs on different port then you need to change environment variable of FE project to make sure about connectivity between FE and BE.
