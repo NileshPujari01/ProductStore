@@ -10,6 +10,7 @@ import { ProductStoreService } from './services/product-store.service';
 import { AdminUserModule } from './admin-user/admin-user.module';
 import { EndUserModule } from './end-user/end-user.module';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     BrowserAnimationsModule,
     EndUserModule,
     AdminUserModule,
+    MatButtonModule
   ],
   providers: [ProductStoreService],
   bootstrap: [AppComponent]

@@ -14,6 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { DialogBoxComponent } from './components/dialog-box/dialog-box.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    MatButtonModule
   ],
   exports: [
     ListProductsComponent,

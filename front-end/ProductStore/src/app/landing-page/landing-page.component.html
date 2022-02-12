@@ -1,4 +1,7 @@
+<div class="container">
 <div *ngIf="isShown">
-<button mat-button [routerLink]="['../end-user','end-user-landing-page']" (click)="hideDiv()">End User</button>
-<button mat-button [routerLink]="['../admin-user','admin-user-landing-page']" (click)="hideDiv()">Admin User</button>
+  <button mat-raised-button color="warn" [routerLink]="['../end-user','end-user-landing-page']" (click)="hideDiv()">End User</button>
+  <button mat-raised-button color="warn" [routerLink]="['../admin-user','admin-user-landing-page']" (click)="hideDiv()">Admin
+    User</button>
+</div>
 </div>
