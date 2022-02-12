@@ -1,4 +1,13 @@
+<mat-form-field style="margin-top:10px">
+  <mat-label>Sort</mat-label>
+  <mat-select  [(value)]="selectedValue" (selectionChange)="sortDataBasedOnValue(selectedValue)">
+    <mat-option value="Rate">By Rating</mat-option>
+    <mat-option value="Price">By Price</mat-option>
+  </mat-select>
+</mat-form-field>
+
 <div style="display:flex; flex-direction: row;" *ngIf="userType === 'EndUser'; else elseTemplate">
+
   <mat-card style="border: 1px solid black; width:10%; margin: 1%; height: 10%;" *ngFor="let productItems of products">
     <mat-card-header>
       <mat-card-title>{{productItems.productName}}</mat-card-title>

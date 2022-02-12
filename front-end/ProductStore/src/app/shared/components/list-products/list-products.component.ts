@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild }
 import { ProductStoreService } from 'src/app/services/product-store.service';
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
+import { MatSort, Sort } from "@angular/material/sort";
 import { MatDialog } from "@angular/material/dialog";
 import { ProductItems } from 'src/app/models/products';
 import { catchError, map, merge, of, startWith, switchMap } from 'rxjs';
@@ -14,7 +14,7 @@ import { ProductApiRequest, ProductRequest } from 'src/app/models/product-reques
   templateUrl: './list-products.component.html',
   styleUrls: ['./list-products.component.scss']
 })
-export class ListProductsComponent implements OnInit{
+export class ListProductsComponent implements OnInit {
   @Input() userType!: string;
   public newRating!: String;
   public newRatingVal: number = 0;
@@ -25,6 +25,8 @@ export class ListProductsComponent implements OnInit{
   public products!: ProductItems[];
   productRequest: ProductRequest = new ProductRequest()
   productApiRequest: ProductApiRequest = new ProductApiRequest()
+
+  selectedValue = 'Rate';
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -38,10 +40,22 @@ export class ListProductsComponent implements OnInit{
     this.showData();
   }
 
+  sortDataBasedOnValue(paramToSort: string) {
+    const ascending: any= this.products.sort((a,b) =>  (a > b ? 1 : -1));
+    const descending: any= this.products.sort((a,b) => (a > b ? -1 : 1))
+
+    if (paramToSort == 'Rate') {
+      this.products.sort((a, b) => a.productRating < b.productRating ? -1 : a.productRating > b.productRating ? 1 : 0)
+    }
+    if (paramToSort == 'Price') {
+      this.products.sort((a, b) => a.productPrice < b.productPrice ? -1 : a.productPrice > b.productPrice ? 1 : 0)
+    }
+  }
+
   showData() {
-    return this.service.getProducts().subscribe(data => { 
-      this.dataSource = data.products, 
-      this.products = data.products 
+    return this.service.getProducts().subscribe(data => {
+      this.dataSource = data.products,
+        this.products = data.products
     });
   }
 
